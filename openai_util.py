@@ -52,7 +52,7 @@ def fine_tune_model(file_id, epochs):
             break
         time.sleep(10)
 
-    return job_id
+    return openai.FineTuningJob.retrieve(job_id).fine_tuned_model
 
 
 def model_call(
