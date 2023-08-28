@@ -2,7 +2,7 @@
 
 
 The release of the GPT-3.5 fine-tuning API opens up the possibility to distill from GPT-4. For a specific task, we could theoretically 
-reach similar performance with lower cost, reduced latency, and higher rate limit. I'm still experimenting with task granularity/data quantitity 
+reach similar performance with lower cost, reduced latency, and higher rate limit. I'm still experimenting with task granularity/data quantity 
 to achieve this distillation but putting the code here
 in case it is useful to everyone.
 
