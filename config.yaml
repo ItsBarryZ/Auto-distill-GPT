@@ -1,0 +1,8 @@
+generation:
+  system_prompt: "Share your knowledge, GPT-4"
+  temperature: 0.3
+  max_tokens: 500
+
+fine_tuning:
+  epochs: 3
+  data_repetition: 2
