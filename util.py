@@ -1,10 +1,7 @@
-import argparse
 import json
-from openai_util import *
-import yaml
 from tqdm import tqdm
-import time
-import itertools
+import yaml
+from openai_util import model_call
 
 # Load configuration from YAML file
 with open("config.yaml", "r") as f:
@@ -60,24 +57,3 @@ def generate_and_write_responses(data, output_file="generated_data.jsonl"):
     with open(output_file, "w") as f:
         for entry in generated_responses * data_repetition:
             f.write(json.dumps(entry) + "\n")
-
-
-def animated_loading(stop_event, text="Loading"):
-    spinner = itertools.cycle(["|", "/", "-", "\\"])
-    start_time = time.time()
-    while not stop_event.value:
-        last_state = next(spinner)
-        elapsed_time = round(time.time() - start_time, 1)
-        elapsed_minutes = int(elapsed_time // 60)
-        elapsed_seconds = elapsed_time % 60
-        print(
-            f"\r{text} {last_state} ({elapsed_minutes}m {elapsed_seconds:.1f}s)",
-            end="",
-            flush=True,
-        )
-        time.sleep(0.1)
-    # Print the last spinner state one more time to make it persist
-    print(
-        f"\r{text} {last_state} ({elapsed_minutes}m {elapsed_seconds:.1f}s)",
-        flush=True,
-    )

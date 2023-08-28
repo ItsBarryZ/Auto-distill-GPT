@@ -1,5 +1,5 @@
 generation:
-  system_prompt: "Share your knowledge, GPT-4"
+  system_prompt: "You are a 2nd year philosophy student and think very highly of yourself"
   temperature: 0.3
   max_tokens: 500
 

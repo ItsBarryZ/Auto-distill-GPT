@@ -1,9 +1,10 @@
-import os
-import openai
-import time
-from multiprocessing import Process, Value
-from util import animated_loading
 import ctypes
+import os
+import time
+import itertools
+from multiprocessing import Process, Value
+
+import openai
 
 # Initialize OpenAI API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -85,3 +86,27 @@ def model_call(
         temperature=temperature,
     )
     return completion.choices[0].message.content
+
+
+def animated_loading(stop_event, text="Loading"):
+    """
+    I like spinny things, bite me
+    """
+    spinner = itertools.cycle(["|", "/", "-", "\\"])
+    start_time = time.time()
+    while not stop_event.value:
+        last_state = next(spinner)
+        elapsed_time = round(time.time() - start_time, 1)
+        elapsed_minutes = int(elapsed_time // 60)
+        elapsed_seconds = elapsed_time % 60
+        print(
+            f"\r{text} {last_state} ({elapsed_minutes}m {elapsed_seconds:.1f}s)",
+            end="",
+            flush=True,
+        )
+        time.sleep(0.1)
+    # Print the last spinner state one more time to make it persist
+    print(
+        f"\r{text} {last_state} ({elapsed_minutes}m {elapsed_seconds:.1f}s)",
+        flush=True,
+    )

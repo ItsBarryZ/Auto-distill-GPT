@@ -1,8 +1,14 @@
 import argparse
-from openai_util import *
-from util import *
+from openai_util import upload_training_data, fine_tune_model
+from util import (
+    read_and_validate_file,
+    augment_data,
+    generate_and_write_responses,
+    config,
+)
 
 
+# Load configuration from YAML file
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
