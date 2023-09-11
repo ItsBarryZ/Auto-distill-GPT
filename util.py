@@ -41,7 +41,7 @@ def generate_and_write_responses(data, output_file="generated_data.jsonl"):
         generated_responses.append(
             {
                 "messages": [
-                    {"role": "user", "content": entry["sentence"]},
+                    {"role": "user", "content": entry["input"]},
                     {"role": "assistant", "content": entry["response"]},
                 ]
             }
