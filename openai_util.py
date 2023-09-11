@@ -60,7 +60,7 @@ def model_call(
     system_message="",
     model_id="gpt-3.5-turbo",
     max_tokens=None,
-    temperature=None,
+    temperature=0.3,
 ):
     """
     Generate a response using a language model.
