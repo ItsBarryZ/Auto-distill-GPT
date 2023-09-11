@@ -1,5 +1,6 @@
 import argparse
-from openai_util import upload_training_data, fine_tune_model
+from tqdm import tqdm
+from openai_util import upload_training_data, fine_tune_model, model_call
 from util import (
     read_and_validate_file,
     augment_data,
@@ -25,10 +26,20 @@ def main():
     if args.augment:
         data = augment_data(data)
 
-    generate_and_write_responses(data)
+    generated_data = []
+    for sentence in tqdm(data, desc="Generating responses"):
+        response = model_call(
+            user_message=sentence,
+            system_message=config["generation"]["system_prompt"],
+            max_tokens=config["generation"]["max_tokens"],
+            temperature=config["generation"]["temperature"],
+        )
+        generated_data.append({"input": sentence, "response": response})
+
+    output_file = generate_and_write_responses(generated_data)
 
     # File upload
-    file_id = upload_training_data("generated_data.jsonl")
+    file_id = upload_training_data(output_file)
 
     # Fine-tuning
     fine_tuning_id = fine_tune_model(file_id, epochs=config["fine_tuning"]["epochs"])
